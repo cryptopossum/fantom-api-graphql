@@ -2,4 +2,4 @@
 // and verify Solidity based contracts.
 package solidity
 
-//go:generate sh ./tools/compile_releases.sh "../../../solidity"
+//go:generate sh ./tools/pull_releases.sh "../../../solidity"

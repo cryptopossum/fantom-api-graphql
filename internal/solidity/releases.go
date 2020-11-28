@@ -2,8 +2,8 @@
 // and verify Solidity based contracts.
 package solidity
 
-// Auto generated Solidity releases list; created 2020-11-20 12:57
-var solidityReleases = [...]string{
+// Auto generated Solidity releases list
+var SolidityReleases = [...]string{
 	"v0.7.5",
 	"v0.7.4",
 	"v0.7.3",
@@ -68,22 +68,4 @@ var solidityReleases = [...]string{
 	"v0.4.2",
 	"v0.4.1",
 	"v0.4.0",
-	"v0.3.6",
-	"v0.3.5",
-	"v0.3.4",
-	"v0.3.3",
-	"v0.3.2",
-	"v0.3.1",
-	"v0.3.0",
-	"v0.2.2",
-	"v0.2.1",
-	"v0.2.0",
-	"v0.1.7",
-	"v0.1.6",
-	"v0.1.5",
-	"v0.1.4",
-	"v0.1.3",
-	"v0.1.2",
-	"v0.0.3",
-	"v0.0.2",
 }
