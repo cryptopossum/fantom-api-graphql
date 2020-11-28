@@ -1,6 +1,6 @@
 package gqlschema
 
-// Auto generated GraphQL schema bundle; created 2020-11-26 14:07
+// Auto generated GraphQL schema bundle
 const schema = `
 # DefiToken represents a token available for DeFi operations.
 type DefiToken {
@@ -1250,14 +1250,21 @@ type OptionState {
     # effectively option index in the options array
     optionId: BigInt!
 
-    # votes is the number of votes received on the option.
+    # votes is the weight of all votes received across all votes;
+    # the projection of the votes to this state uses it to calculate
+    # actual agreement.
     votes: BigInt!
 
-    # agreementRatio represents the ratio of the option agreement across votes.
-    agreementRatio: BigInt!
-
-    # agreement represents the absolute value of the agreement across votes.
+    # agreement represents the rated weight of all the votes towards this option
+    # based on the opinion scale of the proposal and selected opinion scale level of
+    # each vote.
+    # this effectively reflects the absolute weight of affection of all voters
+    # towards this option.
     agreement: BigInt!
+
+    # agreementRatio represents the relative ratio of the option agreement
+    # to the total weight of all votes in 18 digits.
+    agreementRatio: BigInt!
 }
 
 # GovernanceVote is the vote in the context of the given Governance Proposal.
@@ -1480,6 +1487,9 @@ type Query {
     # for the given list of ballots identified by an array of ballot
     # addresses.
     votes(voter:Address!, ballots:[Address!]!):[Vote!]!
+
+    # Solidity version supported for contract validation.
+    solidityVersions:[String]!
 
     # defiConfiguration exposes the current DeFi contract setup.
     defiConfiguration:DefiSettings!

@@ -117,6 +117,9 @@ type Query {
     # addresses.
     votes(voter:Address!, ballots:[Address!]!):[Vote!]!
 
+    # Solidity version supported for contract validation.
+    solidityVersions:[String]!
+
     # defiConfiguration exposes the current DeFi contract setup.
     defiConfiguration:DefiSettings!
 
