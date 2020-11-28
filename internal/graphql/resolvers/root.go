@@ -159,6 +159,10 @@ type ApiResolver interface {
 	// SendTransaction sends raw signed and RLP encoded transaction to the block chain.
 	SendTransaction(*struct{ Tx hexutil.Bytes }) (*Transaction, error)
 
+	// SolidityVersions resolves a list of Solidity releases supported
+	// for smart contract validation.
+	SolidityVersions() []string
+
 	// DefiConfiguration resolves the current DeFi contract settings.
 	DefiConfiguration() (*DefiConfiguration, error)
 
