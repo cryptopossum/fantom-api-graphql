@@ -12,7 +12,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fantom-api-graphql/internal/types"
-	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/compiler"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -113,65 +112,6 @@ func updateContractDetails(sc *types.Contract, detail *compiler.Contract) {
 
 	// copy the source code
 	sc.SourceCode = detail.Info.Source
-}
-
-// ValidateContract tries to validate contract byte code using
-// provided source code. If successful, the contract information
-// is updated the the repository.
-func (p *proxy) ValidateContract(sc *types.Contract) error {
-	// get the byte code of the actual contract
-	tx, err := p.Transaction(&sc.TransactionHash)
-	if err != nil {
-		p.log.Errorf("can not get contract deployment transaction; %s", err.Error())
-		return err
-	}
-
-	// try to compile the source code provided
-	contracts, err := compiler.CompileSolidityString(p.solCompiler, sc.SourceCode)
-	if err != nil {
-		p.log.Errorf("solidity code compilation failed")
-		return err
-	}
-
-	// loop over contracts ad try to validate one of them
-	for name, detail := range contracts {
-		// check if the compiled byte code match with the deployed contract
-		match, err := compareContractCode(tx, detail.Code)
-		if err != nil {
-			p.log.Errorf("contract byte code comparison failed")
-			return err
-		}
-
-		// we have the winner
-		if match {
-			// set the contract name if not done already
-			if 0 == len(sc.Name) {
-				sc.Name = strings.TrimPrefix(name, "<stdin>:")
-			}
-
-			// update the contract data
-			updateContractDetails(sc, detail)
-
-			// write update to the database
-			if err := p.db.UpdateContract(sc); err != nil {
-				p.log.Errorf("contract validation failed due to db error; %s", err.Error())
-				return err
-			}
-
-			// inform about success
-			p.log.Debugf("contract %s [%s] validated", sc.Address.String(), name)
-
-			// re-scan contract transactions so they are up-to-date with their calls analysis
-			p.cache.EvictContract(&sc.Address)
-			go p.transactionRescanContractCalls(sc)
-
-			// inform the upper instance we have a winner
-			return nil
-		}
-	}
-
-	// validation fails
-	return fmt.Errorf("contract source code does not match with the deployed byte code")
 }
 
 // ContractAdd adds new contract into the repository.

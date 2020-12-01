@@ -415,9 +415,6 @@ type proxy struct {
 	// governance contracts reference
 	govContracts []config.GovernanceContract
 
-	// smart contract compilers
-	solCompiler string
-
 	// official ballot source addresses
 	ballotSources []string
 
@@ -442,10 +439,8 @@ func New(cfg *config.Config, log logger.Logger) (Repository, error) {
 		log:   log,
 		cfg:   cfg,
 
+		// keep the governance contracts configuration handy
 		govContracts: cfg.Governance.Contracts,
-
-		// keep reference to the SOL compiler
-		solCompiler: cfg.Compiler.DefaultSolCompilerPath,
 
 		// keep the ballot sources ref
 		ballotSources: cfg.Voting.Sources,
@@ -481,7 +476,7 @@ func connect(cfg *config.Config, log logger.Logger) (*cache.MemBridge, *db.Mongo
 		return nil, nil, nil, err
 	}
 
-	// try to validate the solidity compiler by asking for it's version
+	// try to validate the validator compiler by asking for it's version
 	if _, err := compiler.SolidityVersion(cfg.Compiler.DefaultSolCompilerPath); err != nil {
 		log.Criticalf("can not invoke the Solidity compiler, %s", err.Error())
 		// return nil, nil, nil, err
