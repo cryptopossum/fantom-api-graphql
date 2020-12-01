@@ -1,6 +1,6 @@
-// Package solidity implements Solidity processor used to analyze
+// Package validator implements Solidity processor used to analyze
 // and verify Solidity based contracts.
-package solidity
+package validator
 
 // Auto generated Solidity releases list
 var SolidityReleases = [...]string{

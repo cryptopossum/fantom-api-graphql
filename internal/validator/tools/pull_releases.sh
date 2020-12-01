@@ -6,7 +6,7 @@
 # Please note, some runtime environments don't have access to all Solidity releases
 # and can not use them to process incoming analyze requests sufficiently.
 #
-PACKAGE="solidity"
+PACKAGE="validator"
 SOL_ORIGIN="https://github.com/ethereum/solidity.git"
 OUT_FILE="$(dirname "$0")/../releases.go"
 
