@@ -31,7 +31,7 @@ type Config struct {
 	Cache Cache `mapstructure:"cache"`
 
 	// Cache configuration
-	Compiler Compiler `mapstructure:"compiler"`
+	Validator Validator `mapstructure:"validator"`
 
 	// Repository configuration
 	Repository Repository `mapstructure:"repository"`
@@ -91,10 +91,10 @@ type Cache struct {
 	Eviction time.Duration `mapstructure:"eviction"`
 }
 
-// Compiler represents the contract compilers configuration.
-type Compiler struct {
-	CompilerTempPath       string `mapstructure:"temp"`
-	DefaultSolCompilerPath string `mapstructure:"sol"`
+// Validator represents the contract validator configuration.
+type Validator struct {
+	TempPath            string `mapstructure:"temp"`
+	DefaultCompilerPath string `mapstructure:"default_compiler"`
 }
 
 // Repository represents the repository configuration.
