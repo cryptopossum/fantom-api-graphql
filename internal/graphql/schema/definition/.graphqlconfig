@@ -45,6 +45,10 @@
       "XAPI5 TestNet.Fantom.Network": {
         "url": "https://xapi5.testnet.fantom.network/api",
         "introspect": false
+      },
+      "XAPI5 Dev TestNet.Fantom.Network": {
+        "url": "https://xapi5.testnet.fantom.network/dev",
+        "introspect": false
       }
     }
   }
